@@ -5,9 +5,7 @@ import ProductListing from './components/ProductListing';
 import ProductDetail from './components/ProductDetail';
 import './App.css';
 import SecondaryNavbar from './components/SecondaryNavbar';
-<<<<<<< HEAD
 import HomePage from './components/HomePage';
-=======
 import { supabase } from './supabaseClient';
 
 // Entry page: email/phone input
@@ -262,7 +260,6 @@ function AuthSignup() {
     </div>
   );
 }
->>>>>>> 5c092e2 (Added login/signup changes to App.tsx)
 
 function App() {
   return (
