@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Leaf, ArrowRight, Info, Gift } from 'lucide-react';
+import { Html5Qrcode } from 'html5-qrcode';
 
 // Hero Section
 const HeroSection = styled.section`
@@ -217,7 +218,93 @@ const products = [
   }
 ];
 
+const ScanSection = styled.section`
+  background: linear-gradient(90deg, #fffde7 60%, #ffe082 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(67,160,71,0.08);
+  margin: 2.5rem auto;
+  max-width: 700px;
+  padding: 2rem 2rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+const ScanTitle = styled.h2`
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #43a047;
+  margin-bottom: 0.5rem;
+`;
+const ScanDesc = styled.p`
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+`;
+const ScanButton = styled.button`
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.08);
+  margin-bottom: 1.5rem;
+  transition: background 0.2s;
+  &:hover {
+    background: #388e3c;
+  }
+`;
+const ScanResult = styled.div`
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  color: #0071dc;
+  word-break: break-all;
+`;
+
 const HomePage: React.FC = () => {
+  const [scanning, setScanning] = useState(false);
+  const [scanResult, setScanResult] = useState<string | null>(null);
+  const qrRef = useRef<HTMLDivElement>(null);
+  const html5QrCodeRef = useRef<any>(null);
+
+  const startScan = async () => {
+    setScanResult(null);
+    setScanning(true);
+    if (qrRef.current) {
+      qrRef.current.innerHTML = '';
+    }
+    const html5QrCode = new Html5Qrcode('qr-reader');
+    html5QrCodeRef.current = html5QrCode;
+    try {
+      await html5QrCode.start(
+        { facingMode: 'environment' },
+        { fps: 10, qrbox: 250 },
+        (decodedText: string) => {
+          setScanResult(decodedText);
+          html5QrCode.stop();
+          setScanning(false);
+        },
+        (error: any) => {
+          // ignore scan errors
+        }
+      );
+    } catch (err) {
+      setScanResult('Camera access denied or not available.');
+      setScanning(false);
+    }
+  };
+
+  const stopScan = () => {
+    setScanning(false);
+    if (html5QrCodeRef.current) {
+      html5QrCodeRef.current.stop();
+    }
+  };
+
   return (
     <div>
       {/* Hero Section */}
@@ -233,6 +320,26 @@ const HomePage: React.FC = () => {
         </HeroText>
         <HeroImage src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=300&fit=crop" alt="GreenPath Hero" />
       </HeroSection>
+
+      {/* In-Store Scan Section */}
+      <ScanSection>
+        <ScanTitle>In-Store Feature: Scan to Know CO₂ Emission</ScanTitle>
+        <ScanDesc>
+          Scan here to know the CO₂ emission of the product in front of you. Just tap the button below and point your camera at the QR code on the product!
+        </ScanDesc>
+        {!scanning && (
+          <ScanButton onClick={startScan}>Scan QR Code</ScanButton>
+        )}
+        {scanning && (
+          <ScanButton onClick={stopScan}>Stop Scanning</ScanButton>
+        )}
+        <div id="qr-reader" ref={qrRef} style={{ width: scanning ? 320 : 0, height: scanning ? 320 : 0, margin: scanning ? '1rem auto' : 0, transition: 'all 0.3s' }} />
+        {scanResult && (
+          <ScanResult>
+            <strong>Scanned Result:</strong> {scanResult}
+          </ScanResult>
+        )}
+      </ScanSection>
 
       {/* Grids Section */}
       <GridsSection>
