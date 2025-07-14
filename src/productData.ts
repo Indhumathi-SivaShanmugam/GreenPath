@@ -294,7 +294,7 @@ export const productData = {
       price: 120,
       description: "Crisp, organically grown high-altitude carrots",
       category: "vegetables",
-      image: "/images/products/vegetables/carrot.jpg", // local image
+      image: "/images/products/fruits_and_vegetables/1.jpg", // local image
       alternatives: [
         {
           name: "Carrot – Vellore Organic Collective",
@@ -302,7 +302,7 @@ export const productData = {
           emissionsSplit: { farming: 0.25, transport: 0.15, packaging: 0.1 },
           price: 110,
           description: "Grown without synthetic fertilizer, packed within district",
-          image: "/images/products/vegetables/carrot.jpg"
+          image: "/images/products/fruits_and_vegetables/1.jpg"
         }
       ]
     },
@@ -314,7 +314,7 @@ export const productData = {
       price: 80,
       description: "Organic vine-ripened tomatoes, no wax coating",
       category: "vegetables",
-      image: "/images/products/vegetables/tomato.jpg", // local image
+      image: "/images/products/fruits_and_vegetables/2.jpg", // local image
       alternatives: [
         {
           name: "Tomato – Coimbatore SoilLess Farms",
@@ -322,7 +322,7 @@ export const productData = {
           emissionsSplit: { farming: 0.25, transport: 0.15, packaging: 0.2 },
           price: 95,
           description: "Hydroponically grown, shipped in bulk crates",
-          image: "/images/products/vegetables/tomato.jpg"
+          image: "/images/products/fruits_and_vegetables/2.jpg"
         },
         {
           name: "Tomato – Bengaluru Greenhouse (Farm2Fork)",
@@ -330,7 +330,7 @@ export const productData = {
           emissionsSplit: { farming: 0.2, transport: 0.15, packaging: 0.2 },
           price: 105,
           description: "Year-round greenhouse tomatoes, drip irrigation, sourced regionally",
-          image: "/images/products/vegetables/tomato.jpg"
+          image: "/images/products/fruits_and_vegetables/2.jpg"
         }
       ]
     },
@@ -342,7 +342,7 @@ export const productData = {
       price: 60,
       description: "Organic red onions, sun cured, low-sodium storage",
       category: "vegetables",
-      image: "/images/products/vegetables/onion.jpg", // local image
+      image: "/images/products/fruits_and_vegetables/3.jpg", // local image
       alternatives: [
         {
           name: "Onion – Bhoomi TN Circle",
@@ -350,7 +350,7 @@ export const productData = {
           emissionsSplit: { farming: 0.3, transport: 0.2, packaging: 0.2 },
           price: 65,
           description: "Short-distance delivery, solar-powered packhouse",
-          image: "/images/products/vegetables/onion.jpg"
+          image: "/images/products/fruits_and_vegetables/3.jpg"
         }
       ]
     },
@@ -382,7 +382,7 @@ export const productData = {
       price: 300,
       description: "Hydroponic iceberg lettuce, air-shipped",
       category: "vegetables",
-      image: "/images/products/vegetables/lettuce.jpg", // local image
+      image: "/images/products/fruits_and_vegetables/4.jpg", // local image
       alternatives: [
         {
           name: "Lettuce – Chennai Hydroponics (LeafyGreen Farm)",
@@ -390,7 +390,7 @@ export const productData = {
           emissionsSplit: { farming: 0.4, transport: 0.3, packaging: 0.2 },
           price: 180,
           description: "Fresh hydroponic leaves grown 3 km from warehouse",
-          image: "/images/products/vegetables/lettuce.jpg"
+          image: "/images/products/fruits_and_vegetables/4.jpg"
         }
       ]
     },
@@ -458,7 +458,7 @@ export const productData = {
       price: 70,
       description: "Hybrid field-grown tomato, year-round availability",
       category: "vegetables",
-      image: "/images/products/vegetables/tomato.jpg", // local image
+      image: "/images/products/fruits_and_vegetables/5.jpg", // local image
       alternatives: [
         {
           name: "Tomato – SoilLess Coimbatore",
@@ -466,7 +466,7 @@ export const productData = {
           emissionsSplit: { farming: 0.5, transport: 0.4, packaging: 0.2 },
           price: 95,
           description: "Proximal hydroponic greenhouse, recycled water use",
-          image: "/images/products/vegetables/tomato.jpg"
+          image: "/images/products/fruits_and_vegetables/5.jpg"
         }
       ]
     }
@@ -481,7 +481,7 @@ export const productData = {
       price: 120,
       description: "Biodegradable bamboo handle with soft nylon bristles",
       category: "oralCare",
-      image: "/images/products/oral-care/bamboo-toothbrush.jpg", // local image
+      image: "/images/products/personal_hygiene/1.jpg",
       alternatives: [
         {
           name: "Bamboo Toothbrush – TreeBrush Co.",
@@ -509,7 +509,7 @@ export const productData = {
       price: 180,
       description: "Cold-processed bar with neem, tulsi, and mild foaming",
       category: "soap",
-      image: "/images/products/soap/neem-tulsi-soap.jpg", // local image
+      image: "/images/products/soap/neem-tulsi-soap.jpg",
       alternatives: [
         {
           name: "Herbal Soap – NatureCraft",
@@ -529,7 +529,7 @@ export const productData = {
       price: 499,
       description: "Medical-grade silicone, cotton pouch, lasts 5+ years",
       category: "feminineHygiene",
-      image: "/images/products/feminine-hygiene/reusable-menstrual-cup.jpg", // local image
+      image: "/images/products/feminine-hygiene/reusable-menstrual-cup.jpg",
       alternatives: [
         {
           name: "Menstrual Cup – EcoFem",
@@ -549,7 +549,7 @@ export const productData = {
       price: 250,
       description: "SLS-free herbal bar; lasts 60 washes",
       category: "hairCare",
-      image: "/images/products/hair-care/shampoo-bar.jpg", // local image
+      image: "/images/products/hair-care/shampoo-bar.jpg",
       alternatives: [
         {
           name: "Shampoo Bar – NaturalNest",
@@ -577,7 +577,7 @@ export const productData = {
       price: 999,
       description: "Reusable double-edge razor with bamboo handle",
       category: "shaving",
-      image: "/images/products/shaving/safety-razor.jpg", // local image
+      image: "/images/products/shaving/safety-razor.jpg",
       alternatives: [
         {
           name: "Razor – ReUse Razor Co.",
@@ -597,7 +597,7 @@ export const productData = {
       price: 220,
       description: "Antibacterial formula in a PET bottle",
       category: "handWash",
-      image: "/images/products/hand-wash/liquid-handwash.jpg", // local image
+      image: "/images/products/hand-wash/liquid-handwash.jpg",
       alternatives: [
         {
           name: "Refill Pouch Handwash – DropLess",
@@ -617,7 +617,7 @@ export const productData = {
       price: 150,
       description: "Fluoride gel for cavity protection",
       category: "oralCare",
-      image: "/images/products/oral-care/toothpaste-tube.jpg", // local image
+      image: "/images/products/oral-care/toothpaste-tube.jpg",
       alternatives: [
         {
           name: "Herbal Tooth Powder (Glass Jar) – HerbCura",
@@ -637,7 +637,7 @@ export const productData = {
       price: 99,
       description: "Paper-stick swabs with cotton tips",
       category: "personalCare",
-      image: "/images/products/personal-care/cotton-swabs.jpg", // local image
+      image: "/images/products/personal-care/cotton-swabs.jpg",
       alternatives: [
         {
           name: "Cotton Swabs – LeafCotton",
@@ -657,7 +657,7 @@ export const productData = {
       price: 240,
       description: "Aluminum aerosol can with synthetic fragrance",
       category: "deodorant",
-      image: "/images/products/deodorant/deodorant-spray.jpg", // local image
+      image: "/images/products/deodorant/deodorant-spray.jpg",
       alternatives: [
         {
           name: "Deodorant Balm (Glass Jar) – LushRoots",
@@ -685,7 +685,7 @@ export const productData = {
       price: 249,
       description: "Mint and salicylic gel cleanser in plastic tube",
       category: "skinCare",
-      image: "/images/products/skin-care/face-wash-tube.jpg", // local image
+      image: "/images/products/skin-care/face-wash-tube.jpg",
       alternatives: [
         {
           name: "Herbal Face Cleanser Bar – ForestGlow",
@@ -702,6 +702,310 @@ export const productData = {
           price: 349,
           description: "Foam pump in glass with refill sachets",
           image: "/images/products/skin-care/face-wash-tube.jpg"
+        }
+      ]
+    },
+    {
+      id: 61,
+      name: "Shampoo Bar – EarthSoap Co.",
+      emissions: 1.2,
+      emissionsSplit: { farming: 0.4, transport: 0.4, packaging: 0.4 },
+      price: 250,
+      description: "SLS-free herbal bar; lasts 60 washes",
+      category: "hairCare",
+      image: "/images/products/personal_hygiene/2.jpg",
+      alternatives: [
+        {
+          name: "Shampoo Bar – NaturalNest",
+          emissions: 1.0,
+          emissionsSplit: { farming: 0.35, transport: 0.3, packaging: 0.35 },
+          price: 300,
+          description: "Locally extracted herbs, cardboard sleeve only",
+          image: "/images/products/hair-care/shampoo-bar.jpg"
+        },
+        {
+          name: "Zero-Waste Hair Bar – BareRoots",
+          emissions: 0.9,
+          emissionsSplit: { farming: 0.3, transport: 0.3, packaging: 0.3 },
+          price: 320,
+          description: "Clay & neem base, plastic-free, reusable tin",
+          image: "/images/products/hair-care/shampoo-bar.jpg"
+        }
+      ]
+    },
+    {
+      id: 62,
+      name: "Safety Razor (Stainless Steel) – EcoEdge",
+      emissions: 2.2,
+      emissionsSplit: { manufacturing: 1.2, transport: 0.6, packaging: 0.4 },
+      price: 999,
+      description: "Reusable double-edge razor with bamboo handle",
+      category: "shaving",
+      image: "/images/products/personal_hygiene/3.jpg",
+      alternatives: [
+        {
+          name: "Razor – ReUse Razor Co.",
+          emissions: 1.8,
+          emissionsSplit: { manufacturing: 1.0, transport: 0.5, packaging: 0.3 },
+          price: 1199,
+          description: "Recycled steel and linen pouch; plastic-free packaging",
+          image: "/images/products/shaving/safety-razor.jpg"
+        }
+      ]
+    },
+    {
+      id: 63,
+      name: "Liquid Handwash – CleanDrop",
+      emissions: 3.0,
+      emissionsSplit: { manufacturing: 1.3, transport: 1.0, packaging: 0.7 },
+      price: 220,
+      description: "Antibacterial formula in a PET bottle",
+      category: "handWash",
+      image: "/images/products/personal_hygiene/4.jpg",
+      alternatives: [
+        {
+          name: "Refill Pouch Handwash – DropLess",
+          emissions: 1.2,
+          emissionsSplit: { manufacturing: 0.6, transport: 0.4, packaging: 0.2 },
+          price: 180,
+          description: "Concentrated formula in biodegradable pouch",
+          image: "/images/products/hand-wash/liquid-handwash.jpg"
+        }
+      ]
+    },
+    {
+      id: 64,
+      name: "Toothpaste Tube (Standard) – BrightSmile",
+      emissions: 2.5,
+      emissionsSplit: { manufacturing: 1.2, transport: 0.8, packaging: 0.5 },
+      price: 150,
+      description: "Fluoride gel for cavity protection",
+      category: "oralCare",
+      image: "/images/products/personal_hygiene/5.jpg",
+      alternatives: [
+        {
+          name: "Herbal Tooth Powder (Glass Jar) – HerbCura",
+          emissions: 0.8,
+          emissionsSplit: { farming: 0.4, transport: 0.2, packaging: 0.2 },
+          price: 249,
+          description: "Clove, neem, and baking-soda blend; reusable jar",
+          image: "/images/products/oral-care/toothpaste-tube.jpg"
+        }
+      ]
+    },
+    {
+      id: 65,
+      name: "Cotton Swabs (Paper Stick) – SwabCo",
+      emissions: 1.0,
+      emissionsSplit: { manufacturing: 0.4, transport: 0.4, packaging: 0.2 },
+      price: 99,
+      description: "Paper-stick swabs with cotton tips",
+      category: "personalCare",
+      image: "/images/products/personal-care/cotton-swabs.jpg",
+      alternatives: [
+        {
+          name: "Cotton Swabs – LeafCotton",
+          emissions: 0.7,
+          emissionsSplit: { manufacturing: 0.3, transport: 0.3, packaging: 0.1 },
+          price: 129,
+          description: "Locally made, reduced packaging waste",
+          image: "/images/products/personal-care/cotton-swabs.jpg"
+        }
+      ]
+    },
+    {
+      id: 66,
+      name: "Deodorant Spray (Aerosol) – FreshAir",
+      emissions: 4.5,
+      emissionsSplit: { manufacturing: 2.0, transport: 1.5, packaging: 1.0 },
+      price: 240,
+      description: "Aluminum aerosol can with synthetic fragrance",
+      category: "deodorant",
+      image: "/images/products/personal_hygiene/6.jpg",
+      alternatives: [
+        {
+          name: "Deodorant Balm (Glass Jar) – LushRoots",
+          emissions: 1.2,
+          emissionsSplit: { farming: 0.4, transport: 0.4, packaging: 0.4 },
+          price: 299,
+          description: "Creamy balm with shea and essential oils; compostable jar",
+          image: "/images/products/deodorant/deodorant-spray.jpg"
+        },
+        {
+          name: "Roll-On Deodorant – PurePit",
+          emissions: 1.0,
+          emissionsSplit: { farming: 0.35, transport: 0.35, packaging: 0.3 },
+          price: 199,
+          description: "Botanical-based roll-on in glass bottle",
+          image: "/images/products/deodorant/deodorant-spray.jpg"
+        }
+      ]
+    },
+    {
+      id: 67,
+      name: "Face Wash Tube – GlowMint",
+      emissions: 3.2,
+      emissionsSplit: { manufacturing: 1.5, transport: 1.0, packaging: 0.7 },
+      price: 249,
+      description: "Mint and salicylic gel cleanser in plastic tube",
+      category: "skinCare",
+      image: "/images/products/personal_hygiene/7.jpg",
+      alternatives: [
+        {
+          name: "Herbal Face Cleanser Bar – ForestGlow",
+          emissions: 1.0,
+          emissionsSplit: { farming: 0.4, transport: 0.3, packaging: 0.3 },
+          price: 299,
+          description: "Oat & honey bar, zero plastic packaging",
+          image: "/images/products/skin-care/face-wash-tube.jpg"
+        },
+        {
+          name: "Refillable Foam Cleanser – ReFillFace",
+          emissions: 1.3,
+          emissionsSplit: { manufacturing: 0.5, transport: 0.5, packaging: 0.3 },
+          price: 349,
+          description: "Foam pump in glass with refill sachets",
+          image: "/images/products/skin-care/face-wash-tube.jpg"
+        }
+      ]
+    },
+    {
+      id: 68,
+      name: "Muslin Baby Wrap – BebeWrap",
+      emissions: 0.8,
+      emissionsSplit: {
+        cotton: 0.5,
+        weaving: 0.2,
+        logisticsPack: 0.1
+      },
+      price: 1299,
+      description: "Soft breathable muslin swaddle, generous size",
+      category: "baby",
+      image: "/images/products/baby/muslin-baby-wrap.jpg",
+      alternatives: [
+        {
+          name: "ReWrap Recycled Cotton Wrap",
+          emissions: 0.5,
+          emissionsSplit: {
+            reclaimedFiber: 0.3,
+            weaving: 0.15,
+            logistics: 0.05
+          },
+          price: 1499,
+          description: "Made from upcycled textile waste, naturally dyed, includes reusable pouch",
+          image: "/images/products/baby/rewrap-recycled-cotton-wrap.jpg"
+        }
+      ]
+    },
+    {
+      id: 69,
+      name: "Cotton Socks – ComfyToes",
+      emissions: 0.6,
+      emissionsSplit: {
+        yarn: 0.3,
+        knitting: 0.2,
+        packaging: 0.1
+      },
+      price: 549,
+      description: "Soft cotton blend, reinforced toe/heel",
+      category: "socks",
+      image: "/images/products/personal_hygiene/8.jpg",
+      alternatives: [
+        {
+          name: "LeafFeet Bamboo Socks",
+          emissions: 0.4,
+          emissionsSplit: {
+            bambooProcessing: 0.15,
+            knitting: 0.15,
+            packaging: 0.1
+          },
+          price: 249,
+          description: "Moisture-wicking, bamboo viscose, anti-odor",
+          image: "/images/products/socks/leaffeet-bamboo-socks.jpg"
+        }
+      ]
+    },
+    {
+      id: 70,
+      name: "Baby Food Jar – YumPuree",
+      emissions: 0.4,
+      emissionsSplit: {
+        ingredients: 0.25,
+        processing: 0.10,
+        jarPackage: 0.05
+      },
+      price: 120,
+      description: "No-sugar vegetable purees in recyclable glass",
+      category: "food",
+      image: "/images/products/food/baby-food-jar.jpg",
+      alternatives: [
+        {
+          name: "HomeHarvest Reusable Pouch",
+          emissions: 0.1,
+          emissionsSplit: {
+            ingredients: 0.05,
+            pouchProduction: 0.03,
+            washing: 0.02
+          },
+          price: 499,
+          description: "Silicone pouch for homemade puree, dishwasher & freezer safe",
+          image: "/images/products/food/homeharvest-reusable-pouch.jpg"
+        }
+      ]
+    },
+    {
+      id: 71,
+      name: "Silicone Pacifier – BabyCalm",
+      emissions: 0.3,
+      emissionsSplit: {
+        silicone: 0.18,
+        manufacturing: 0.08,
+        packagingTransport: 0.04
+      },
+      price: 300,
+      description: "Orthodontic pacifier, medical-grade, easy-grip shield",
+      category: "pacifiers",
+      image: "/images/products/pacifiers/silicone-pacifier.jpg",
+      alternatives: [
+        {
+          name: "Wooden Pacifier – WoodPads",
+          emissions: 0.18,
+          emissionsSplit: {
+            woodMilling: 0.1,
+            assembly: 0.05,
+            packaging: 0.03
+          },
+          price: 600,
+          description: "Sustainably-harvested beechwood, hand-finished, reusable cotton pouch",
+          image: "/images/products/pacifiers/wooden-pacifier.jpg"
+        }
+      ]
+    },
+    {
+      id: 72,
+      name: "Plastic Toy – PlayFun",
+      emissions: 1.5,
+      emissionsSplit: {
+        resin: 0.9,
+        molding: 0.3,
+        packagingTransport: 0.3
+      },
+      price: 799,
+      description: "BPA-free colorful stacking blocks for toddlers",
+      category: "toys",
+      image: "/images/products/toys/plastic-toy.jpg",
+      alternatives: [
+        {
+          name: "Bamboo Toy – ForestPlay",
+          emissions: 0.75,
+          emissionsSplit: {
+            bambooSourcing: 0.45,
+            crafting: 0.15,
+            packagingTransport: 0.15
+          },
+          price: 1099,
+          description: "FSC-certified bamboo blocks, hand-finished, non-toxic paint, recyclable",
+          image: "/images/products/toys/bamboo-toy.jpg"
         }
       ]
     }

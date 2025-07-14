@@ -2,105 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { useParams, Link, useNavigate } from 'react-router-dom';
 import { ShoppingCart, Leaf, ArrowLeft, ChevronDown, ChevronUp } from 'lucide-react';
-
-// Copy the products array from ProductListing
-const products = [
-  {
-    id: '1',
-    name: 'Organic Bananas',
-    price: 2.99,
-    image: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=400&fit=crop',
-    description: 'Fresh organic bananas grown without synthetic pesticides or fertilizers. These bananas are sourced from sustainable farms that prioritize soil health and biodiversity.',
-    co2Emissions: 0.8,
-    farmingEmissions: 0.5,
-    transportEmissions: 0.3,
-    features: [
-      'Fresh produce',
-      'Easy-to-peel bananas',
-      'Can be enjoyed raw or cooked',
-      'Can elevate dessert and breakfast recipes'
-    ]
-  },
-  {
-    id: '2',
-    name: 'Fresh Milk',
-    price: 4.49,
-    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&h=400&fit=crop',
-    description: 'Premium whole milk from grass-fed cows. This milk is produced using sustainable farming practices and minimal processing to preserve natural nutrients.',
-    co2Emissions: 1.2,
-    farmingEmissions: 0.8,
-    transportEmissions: 0.4,
-    features: [
-      'Grass-fed cows',
-      'Sustainable farming',
-      'Minimal processing',
-      'Rich in nutrients'
-    ]
-  },
-  {
-    id: '3',
-    name: 'Organic Apples',
-    price: 3.99,
-    image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&h=400&fit=crop',
-    description: 'Crisp organic apples grown in pesticide-free orchards. These apples are hand-picked and carefully selected for optimal freshness and flavor.',
-    co2Emissions: 0.6,
-    farmingEmissions: 0.4,
-    transportEmissions: 0.2,
-    features: [
-      'Pesticide-free orchards',
-      'Hand-picked',
-      'Optimal freshness and flavor'
-    ]
-  },
-  {
-    id: '4',
-    name: 'Whole Grain Bread',
-    price: 3.29,
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=400&fit=crop',
-    description: 'Artisan whole grain bread made with organic flour and natural ingredients. This bread is baked fresh daily using traditional methods.',
-    co2Emissions: 0.9,
-    farmingEmissions: 0.6,
-    transportEmissions: 0.3,
-    features: [
-      'Organic flour',
-      'Natural ingredients',
-      'Baked fresh daily',
-      'Traditional methods'
-    ]
-  },
-  {
-    id: '5',
-    name: 'Organic Tomatoes',
-    price: 2.49,
-    image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=600&h=400&fit=crop',
-    description: 'Vine-ripened organic tomatoes grown in nutrient-rich soil. These tomatoes are harvested at peak ripeness for maximum flavor and nutrition.',
-    co2Emissions: 0.7,
-    farmingEmissions: 0.5,
-    transportEmissions: 0.2,
-    features: [
-      'Vine-ripened',
-      'Nutrient-rich soil',
-      'Peak ripeness',
-      'Maximum flavor and nutrition'
-    ]
-  },
-  {
-    id: '6',
-    name: 'Free Range Eggs',
-    price: 5.99,
-    image: 'https://images.unsplash.com/photo-1569288063648-5bb845da6e2a?w=600&h=400&fit=crop',
-    description: 'Free-range eggs from hens that roam freely on organic pastures. These eggs are rich in omega-3 fatty acids and essential nutrients.',
-    co2Emissions: 1.5,
-    farmingEmissions: 1.0,
-    transportEmissions: 0.5,
-    features: [
-      'Free-range hens',
-      'Organic pastures',
-      'Rich in omega-3',
-      'Essential nutrients'
-    ]
-  }
-];
+import { productData } from '../productData';
 
 const Container = styled.div`
   max-width: 1100px;
@@ -234,7 +136,14 @@ const AltCO2 = styled.div`
 const ProductDetail: React.FC = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const product = products.find(p => p.id === id);
+  // Search all categories for the product by id
+  let product: any = null;
+  for (const category of Object.values(productData)) {
+    if (Array.isArray(category)) {
+      const found = (category as any[]).find((p: any) => String(p.id) === String(id));
+      if (found) { product = found; break; }
+    }
+  }
   const [aboutOpen, setAboutOpen] = useState(true);
 
   if (!product) {
@@ -246,9 +155,11 @@ const ProductDetail: React.FC = () => {
     );
   }
 
+  // Flatten all products from all categories for alternatives
+  const allProducts: any[] = Object.values(productData).flat();
   // Find eco alternatives
-  const alternatives = products.filter(p => p.co2Emissions < product.co2Emissions && p.id !== product.id)
-    .sort((a, b) => a.co2Emissions - b.co2Emissions)
+  const alternatives = allProducts.filter((p: any) => p.co2Emissions < product.co2Emissions && String(p.id) !== String(product.id))
+    .sort((a: any, b: any) => a.co2Emissions - b.co2Emissions)
     .slice(0, 3);
 
   return (
@@ -272,7 +183,7 @@ const ProductDetail: React.FC = () => {
               <div>
                 <p style={{margin: '1rem 0 0.5rem 0'}}>{product.description}</p>
                 <FeaturesList>
-                  {product.features && product.features.map((f, i) => <li key={i}>{f}</li>)}
+                  {product.features && product.features.map((f: string, i: number) => <li key={i}>{f}</li>)}
                 </FeaturesList>
               </div>
             )}
@@ -286,7 +197,7 @@ const ProductDetail: React.FC = () => {
               <div style={{marginTop: 16}}>
                 <div style={{fontWeight: 600, marginBottom: 8}}>Eco Alternatives</div>
                 <AlternativesGrid>
-                  {alternatives.map(alt => (
+                  {alternatives.map((alt: any) => (
                     <AltCard key={alt.id}>
                       <AltImage src={alt.image} alt={alt.name} />
                       <AltName>{alt.name}</AltName>
