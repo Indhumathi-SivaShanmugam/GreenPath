@@ -42,6 +42,7 @@ const SecondaryNavbar: React.FC = () => {
       <NavList>
         <NavItem><NavLink to="/departments">Departments</NavLink></NavItem>
         <NavItem><NavLink to="/services">Services</NavLink></NavItem>
+        <NavItem><NavLink to="/greenpath">Greenpath</NavLink></NavItem>
         <NavItem><NavLink to="/get-it-fast">Get it Fast</NavLink></NavItem>
         <NavItem><NavLink to="/new-arrivals">New Arrivals</NavLink></NavItem>
         <NavItem><NavLink to="/deals">Deals</NavLink></NavItem>

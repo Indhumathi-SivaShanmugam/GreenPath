@@ -217,7 +217,7 @@ const products = [
   }
 ];
 
-const HomePage: React.FC = () => {
+const GreenPathLanding: React.FC = () => {
   return (
     <div>
       {/* Hero Section */}
@@ -284,4 +284,4 @@ const HomePage: React.FC = () => {
   );
 };
 
-export default HomePage; 
+export default GreenPathLanding; 
