@@ -1,393 +1,477 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Link } from 'react-router-dom';
-import { Leaf, ArrowRight, Info, Gift } from 'lucide-react';
-import { Html5Qrcode } from 'html5-qrcode';
+import { productData } from '../productData';
+import { Leaf, ListTree } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
-// Hero Section
-const HeroSection = styled.section`
-  background: linear-gradient(90deg, #43a047 60%, #b2dfdb 100%);
-  color: white;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 2.5rem 3rem 2.5rem 2rem;
-  border-radius: 16px;
-  margin: 2rem auto 2.5rem auto;
-  max-width: 1200px;
-  min-height: 260px;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
-  @media (max-width: 900px) {
-    flex-direction: column;
-    text-align: center;
-    padding: 2rem 1rem;
-  }
-`;
+const products = [
+  {
+    name: 'EcoCompute ARM Laptop',
+    emissions: 80,
+    emissionsSplit: { manufacture: 60, transport: 12, packaging: 8 },
+    price: 35999,
+    description: 'Lightweight ARM design, efficient battery, aluminum chassis',
+    green: true,
+    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80',
+    area: 'tile1',
+  },
+  {
+    name: 'Bluetooth Headphones',
+    price: 2499,
+    description: 'Wireless, noise-cancelling, 30h battery',
+    green: false,
+    image: 'https://images.unsplash.com/photo-1511367461989-f85a21fda167?auto=format&fit=crop&w=600&q=80',
+    area: 'tile2',
+  },
+  {
+    name: 'Cloth Diaper Rental – ReDiaper',
+    emissions: 0.05,
+    emissionsSplit: { laundry: 0.03, logistics: 0.015, packaging: 0.005 },
+    price: 1500,
+    description: 'Stylish bamboo-cotton reusable set; weekly eco-washing pickup, compostable shipping',
+    green: true,
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+    area: 'tile3',
+  },
+  {
+    name: 'Smart LED TV 43"',
+    price: 18999,
+    description: '4K UHD, HDR, built-in streaming',
+    green: false,
+    image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80',
+    area: 'tile4',
+  },
+  {
+    name: 'Wooden Pacifier – WoodPads',
+    emissions: 0.18,
+    emissionsSplit: { woodMilling: 0.1, assembly: 0.05, packaging: 0.03 },
+    price: 600,
+    description: 'Sustainably-harvested beechwood, hand-finished, reusable cotton pouch',
+    green: true,
+    image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
+    area: 'tile5',
+  },
+  {
+    name: 'CorkStyle Hybrid Belt',
+    emissions: 3.5,
+    emissionsSplit: { cork: 2, leather: 0.8, logistics: 0.7 },
+    price: 1399,
+    description: 'Cork + leather exterior, veg-tanned',
+    green: true,
+    image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80',
+    area: 'tile6',
+  },
+  {
+    name: 'Fashion Sneakers',
+    price: 1799,
+    description: 'Lightweight, breathable, multiple colors',
+    green: false,
+    image: 'https://images.unsplash.com/photo-1517260911205-8c6f6fa6c24a?auto=format&fit=crop&w=600&q=80', // working image
+    area: 'tile7',
+  },
+  {
+    name: 'Bamboo Towels – LeafTissue',
+    emissions: 0.7,
+    emissionsSplit: { farming: 0.25, transport: 0.3, packaging: 0.15 },
+    price: 280,
+    description: 'Certified organic bamboo, softer with extra layers',
+    green: true,
+    image: 'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=80',
+    area: 'tile8',
+  },
+  {
+    name: 'Apple – Kashmir Valley (ZeroCarbon Fruits)',
+    emissions: 0.9,
+    emissionsSplit: { farming: 0.4, transport: 0.3, packaging: 0.2 },
+    price: 275,
+    description: 'Shipped by eco-rail, reusable crates, shorter cold-chain',
+    green: true,
+    image: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=600&q=80',
+    area: 'tile9',
+  },
+  {
+    name: 'Wireless Mouse',
+    price: 599,
+    description: 'Ergonomic, 2.4GHz, 12-month battery',
+    green: false,
+    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80',
+    area: 'tile10',
+  },
+  {
+    name: 'Instant Pot 6L',
+    price: 6999,
+    description: '7-in-1 multi-cooker, easy clean',
+    green: false,
+    image: 'https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=600&q=80',
+    area: 'tile11',
+  },
+];
 
-const HeroText = styled.div`
-  flex: 1;
-`;
-
-const HeroTitle = styled.h1`
-  font-size: 2.5rem;
-  font-weight: 800;
-  margin-bottom: 0.5rem;
-`;
-
-const HeroSubtitle = styled.p`
-  font-size: 1.3rem;
-  margin-bottom: 1.5rem;
-`;
-
-const HeroButton = styled(Link)`
-  background: #ffc220;
-  color: #222;
-  border: none;
-  border-radius: 6px;
-  padding: 0.75rem 2rem;
-  font-size: 1.1rem;
-  font-weight: 600;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-  transition: background 0.2s;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  &:hover {
-    background: #ffd966;
-  }
-`;
-
-const HeroImage = styled.img`
-  width: 220px;
-  height: 180px;
-  object-fit: contain;
-  border-radius: 12px;
-  margin-left: 2rem;
-  background: #fff;
-  @media (max-width: 900px) {
-    margin: 2rem 0 0 0;
-  }
-`;
-
-// Grids Section
-const GridsSection = styled.section`
+// Improved Walmart-style grid layout for 11 product cards
+const Grid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 2rem;
-  max-width: 1200px;
-  margin: 0 auto 2.5rem auto;
+  grid-template-areas:
+    'tile1 tile1 tile2 tile3'
+    'tile4 tile5 tile2 tile6'
+    'tile7 tile8 tile9 tile6'
+    'tile10 tile11 tile11 tile6';
+  grid-template-columns: 2fr 1.2fr 1.2fr 1.2fr;
+  grid-template-rows: 220px 180px 180px 180px;
+  gap: 1.5rem;
+  max-width: 1400px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+  @media (max-width: 1100px) {
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      'tile1 tile1'
+      'tile2 tile3'
+      'tile4 tile5'
+      'tile6 tile7'
+      'tile8 tile9'
+      'tile10 tile11';
+    grid-template-rows: repeat(6, 200px);
+  }
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'tile1'
+      'tile2'
+      'tile3'
+      'tile4'
+      'tile5'
+      'tile6'
+      'tile7'
+      'tile8'
+      'tile9'
+      'tile10'
+      'tile11';
+    grid-template-rows: repeat(11, 180px);
+  }
 `;
 
-const GridCard = styled(Link)`
+const Card = styled.div<{area: string}>`
   background: #fff;
-  color: #222;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
-  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 1.1rem 1.1rem 1.1rem 1.1rem;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  min-height: 180px;
+  min-height: 0;
   position: relative;
-  text-decoration: none;
-  transition: box-shadow 0.15s;
-  &:hover {
-    box-shadow: 0 4px 16px rgba(67,160,71,0.18);
-  }
+  grid-area: ${({area}) => area};
+  overflow: hidden;
+  height: 100%;
 `;
 
-const GridTitle = styled.h2`
-  font-size: 1.3rem;
+const Img = styled.img`
+  width: 100%;
+  height: 110px;
+  max-height: 110px;
+  object-fit: cover;
+  background: #f2f2f2;
+  border-radius: 10px;
+  margin-bottom: 0.7rem;
+`;
+
+const Name = styled.h2`
+  font-size: 1.1rem;
   font-weight: 700;
-  margin-bottom: 0.5rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+  max-height: 2.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-const GridDesc = styled.p`
+const Price = styled.div`
   font-size: 1.05rem;
-  margin-bottom: 1.2rem;
+  font-weight: 600;
+  color: #0071dc;
+  margin-bottom: 0.3rem;
 `;
 
-const GridIcon = styled.div`
-  position: absolute;
-  right: 1.5rem;
-  bottom: 1.5rem;
-  color: #43a047;
-`;
-
-// Product Grid Section
-const ProductSection = styled.section`
-  max-width: 1200px;
-  margin: 0 auto 2.5rem auto;
-`;
-
-const ProductGrid = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 2rem;
-`;
-
-const ProductCard = styled(Link)`
-  background: #fff;
-  color: #222;
-  border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-  padding: 1.5rem 1rem 1rem 1rem;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-  min-height: 320px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: box-shadow 0.15s;
-  &:hover {
-    box-shadow: 0 4px 16px rgba(67,160,71,0.18);
-  }
-`;
-
-const ProductImage = styled.img`
-  width: 100px;
-  height: 100px;
-  object-fit: contain;
-  border-radius: 8px;
-  margin-bottom: 1rem;
-`;
-
-const ProductName = styled.h3`
-  font-size: 1.1rem;
-  margin: 0.5rem 0 0.25rem 0;
-  color: #222;
-  text-align: center;
-`;
-
-const ProductPrice = styled.div`
-  font-size: 1.1rem;
-  font-weight: bold;
-  color: #43a047;
+const Desc = styled.p`
+  font-size: 0.98rem;
+  color: #333;
   margin-bottom: 0.5rem;
+  max-height: 2.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
 `;
 
-// Example product data (reuse from ProductListing)
-const products = [
-  {
-    id: '1',
-    name: 'Organic Bananas',
-    price: 2.99,
-    image: 'https://images.unsplash.com/photo-1571771894821-ce9b6c11b08e?w=600&h=400&fit=crop',
-    co2Emissions: 0.8,
-  },
-  {
-    id: '2',
-    name: 'Fresh Milk',
-    price: 4.49,
-    image: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?w=600&h=400&fit=crop',
-    co2Emissions: 1.2,
-  },
-  {
-    id: '3',
-    name: 'Organic Apples',
-    price: 3.99,
-    image: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?w=600&h=400&fit=crop',
-    co2Emissions: 0.6,
-  },
-  {
-    id: '4',
-    name: 'Whole Grain Bread',
-    price: 3.29,
-    image: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=600&h=400&fit=crop',
-    co2Emissions: 0.9,
-  },
-  {
-    id: '5',
-    name: 'Organic Tomatoes',
-    price: 2.49,
-    image: 'https://images.unsplash.com/photo-1546094096-0df4bcaaa337?w=600&h=400&fit=crop',
-    co2Emissions: 0.7,
-  },
-  {
-    id: '6',
-    name: 'Free Range Eggs',
-    price: 5.99,
-    image: 'https://images.unsplash.com/photo-1569288063648-5bb845da6e2a?w=600&h=400&fit=crop',
-    co2Emissions: 1.5,
-  }
+const GreenBadge = styled.span`
+  background: #e6f7e6;
+  color: #228b22;
+  font-size: 0.93rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.15rem 0.6rem;
+  margin-bottom: 0.4rem;
+  margin-right: 0.5rem;
+`;
+
+const Emissions = styled.div`
+  font-size: 0.95rem;
+  color: #228b22;
+  margin-bottom: 0.1rem;
+`;
+
+// Add type for productData keys
+const CATEGORY_MAP: { key: keyof typeof productData; label: string }[] = [
+  { key: 'homeCare', label: 'Home & Cleaning' },
+  { key: 'groceries', label: 'Fruits & Vegetables' },
+  { key: 'personalCare', label: 'Personal Hygiene' },
+  { key: 'babyProducts', label: 'Baby Products' },
+  { key: 'electronics', label: 'Electronics & Appliances' },
+  { key: 'clothing', label: 'Clothing & Accessories' },
 ];
 
-const ScanSection = styled.section`
-  background: linear-gradient(90deg, #fffde7 60%, #ffe082 100%);
-  border-radius: 16px;
-  box-shadow: 0 4px 24px rgba(67,160,71,0.08);
-  margin: 2.5rem auto;
-  max-width: 700px;
-  padding: 2rem 2rem 2.5rem 2rem;
+const PLACEHOLDER_IMG = 'https://via.placeholder.com/150?text=Product';
+
+// Place all styled components above HomePage and modal functions
+const CategorySection = styled.section`
+  margin: 2.5rem auto 0 auto;
+  max-width: 1400px;
+  padding: 0 1rem;
+`;
+const CategoryHeader = styled.div`
   display: flex;
-  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
 `;
-const ScanTitle = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: #43a047;
-  margin-bottom: 0.5rem;
+const CategoryTitle = styled.h2`
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin: 0;
 `;
-const ScanDesc = styled.p`
-  font-size: 1.1rem;
-  color: #333;
-  margin-bottom: 1.5rem;
-`;
-const ScanButton = styled.button`
-  background: #43a047;
+const ShopAllBtn = styled.button`
+  background: #0071dc;
   color: #fff;
   border: none;
-  border-radius: 6px;
-  padding: 0.75rem 2rem;
-  font-size: 1.1rem;
+  border-radius: 18px;
+  padding: 0.4rem 1.2rem;
+  font-size: 1rem;
   font-weight: 600;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(67,160,71,0.08);
-  margin-bottom: 1.5rem;
   transition: background 0.2s;
-  &:hover {
-    background: #388e3c;
-  }
+  &:hover { background: #005bb5; }
 `;
-const ScanResult = styled.div`
-  margin-top: 1rem;
-  font-size: 1.1rem;
+const CategoryRow = styled.div`
+  display: flex;
+  gap: 1.5rem;
+  overflow-x: auto;
+  padding-bottom: 0.5rem;
+`;
+const CatCard = styled.div`
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 1.1rem 1.1rem 1.1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 220px;
+  max-width: 240px;
+  min-height: 320px;
+  position: relative;
+  overflow: hidden;
+`;
+const CatImg = styled.img`
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  background: #f2f2f2;
+  border-radius: 10px;
+  margin-bottom: 0.7rem;
+`;
+const CatName = styled.h3`
+  font-size: 1.05rem;
+  font-weight: 700;
+  margin-bottom: 0.2rem;
+  max-height: 2.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+const CatPrice = styled.div`
+  font-size: 1.02rem;
+  font-weight: 600;
   color: #0071dc;
-  word-break: break-all;
+  margin-bottom: 0.2rem;
 `;
+const CatDesc = styled.p`
+  font-size: 0.97rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+  max-height: 2.8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+const IconRow = styled.div`
+  display: flex;
+  gap: 0.7rem;
+  margin-top: auto;
+`;
+const IconBtn = styled.button`
+  background: #f5f6fa;
+  border: none;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.18s;
+  &:hover { background: #e6f7e6; }
+`;
+
+// Types for modal props
+interface EmissionsModalProps {
+  open: boolean;
+  onClose: () => void;
+  product: any;
+}
+interface AlternativesModalProps {
+  open: boolean;
+  onClose: () => void;
+  product: any;
+}
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.18);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const ModalBox = styled.div`
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.13);
+  padding: 2rem 2.2rem 1.5rem 2.2rem;
+  min-width: 320px;
+  max-width: 95vw;
+`;
+const ModalTitle = styled.div`
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+`;
+const CloseBtn = styled.button`
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+`;
+
+function EmissionsModal({ open, onClose, product }: EmissionsModalProps) {
+  if (!open || !product) return null;
+  return (
+    <ModalOverlay onClick={onClose}>
+      <ModalBox onClick={(e: React.MouseEvent) => e.stopPropagation()} style={{ position: 'relative' }}>
+        <CloseBtn onClick={onClose}>&times;</CloseBtn>
+        <ModalTitle>CO₂ Emissions Breakdown</ModalTitle>
+        <div><strong>Total:</strong> {product.emissions} kg</div>
+        <ul style={{ margin: '0.7em 0 0 0.5em', padding: 0 }}>
+          {product.emissionsSplit && Object.entries(product.emissionsSplit).map(([k, v]: [string, any]) => (
+            <li key={k} style={{ fontSize: 15 }}>{k}: {v} kg</li>
+          ))}
+        </ul>
+      </ModalBox>
+    </ModalOverlay>
+  );
+}
+
+function AlternativesModal({ open, onClose, product }: AlternativesModalProps) {
+  if (!open || !product) return null;
+  return (
+    <ModalOverlay onClick={onClose}>
+      <ModalBox onClick={(e: React.MouseEvent) => e.stopPropagation()} style={{ position: 'relative' }}>
+        <CloseBtn onClick={onClose}>&times;</CloseBtn>
+        <ModalTitle>Alternative Suggestions</ModalTitle>
+        {product.alternatives && product.alternatives.length > 0 ? (
+          <ul style={{ margin: 0, padding: 0 }}>
+            {product.alternatives.map((alt: any, i: number) => (
+              <li key={i} style={{ marginBottom: 12 }}>
+                <div style={{ fontWeight: 600 }}>{alt.name}</div>
+                <div style={{ fontSize: 15 }}>{alt.description}</div>
+                <div style={{ color: '#228b22', fontSize: 14 }}>CO₂: {alt.emissions} kg</div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <div>No alternatives available.</div>
+        )}
+      </ModalBox>
+    </ModalOverlay>
+  );
+}
 
 const HomePage: React.FC = () => {
-  const [scanning, setScanning] = useState(false);
-  const [scanResult, setScanResult] = useState<string | null>(null);
-  const qrRef = useRef<HTMLDivElement>(null);
-  const html5QrCodeRef = useRef<any>(null);
-
-  const startScan = async () => {
-    setScanResult(null);
-    setScanning(true);
-    if (qrRef.current) {
-      qrRef.current.innerHTML = '';
-    }
-    const html5QrCode = new Html5Qrcode('qr-reader');
-    html5QrCodeRef.current = html5QrCode;
-    try {
-      await html5QrCode.start(
-        { facingMode: 'environment' },
-        { fps: 10, qrbox: 250 },
-        (decodedText: string) => {
-          setScanResult(decodedText);
-          html5QrCode.stop();
-          setScanning(false);
-        },
-        (error: any) => {
-          // ignore scan errors
-        }
-      );
-    } catch (err) {
-      setScanResult('Camera access denied or not available.');
-      setScanning(false);
-    }
-  };
-
-  const stopScan = () => {
-    setScanning(false);
-    if (html5QrCodeRef.current) {
-      html5QrCodeRef.current.stop();
-    }
-  };
+  const navigate = useNavigate();
+  const [emissionsModal, setEmissionsModal] = useState<{ open: boolean; product: any }>({ open: false, product: null });
+  const [alternativesModal, setAlternativesModal] = useState<{ open: boolean; product: any }>({ open: false, product: null });
 
   return (
-    <div>
-      {/* Hero Section */}
-      <HeroSection>
-        <HeroText>
-          <HeroTitle>Choose a Greener Path</HeroTitle>
-          <HeroSubtitle>
-            Shop products with lower carbon emissions and make a positive impact on the planet. Join the GreenPath movement today!
-          </HeroSubtitle>
-          <HeroButton to="/greenpath/products">
-            <Leaf size={22} /> Shop GreenPath <ArrowRight size={18} />
-          </HeroButton>
-        </HeroText>
-        <HeroImage src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=400&h=300&fit=crop" alt="GreenPath Hero" />
-      </HeroSection>
+    <>
+      <Grid>
+        {products.map((p, i) => (
+          <Card key={i} area={p.area}>
+            <Img src={p.image} alt={p.name} />
+            {p.green && <GreenBadge>GreenPath</GreenBadge>}
+            <Name>{p.name}</Name>
+            <Price>₹{p.price.toLocaleString()}</Price>
+            <Desc>{p.description}</Desc>
+            {p.green && (
+              <Emissions>
+                CO₂: {p.emissions} kg
+              </Emissions>
+            )}
+          </Card>
+        ))}
+      </Grid>
 
-      {/* In-Store Scan Section */}
-      <ScanSection>
-        <ScanTitle>In-Store Feature: Scan to Know CO₂ Emission</ScanTitle>
-        <ScanDesc>
-          Scan here to know the CO₂ emission of the product in front of you. Just tap the button below and point your camera at the QR code on the product!
-        </ScanDesc>
-        {!scanning && (
-          <ScanButton onClick={startScan}>Scan QR Code</ScanButton>
-        )}
-        {scanning && (
-          <ScanButton onClick={stopScan}>Stop Scanning</ScanButton>
-        )}
-        <div id="qr-reader" ref={qrRef} style={{ width: scanning ? 320 : 0, height: scanning ? 320 : 0, margin: scanning ? '1rem auto' : 0, transition: 'all 0.3s' }} />
-        {scanResult && (
-          <ScanResult>
-            <strong>Scanned Result:</strong> {scanResult}
-          </ScanResult>
-        )}
-      </ScanSection>
-
-      {/* Grids Section */}
-      <GridsSection>
-        <GridCard to="/greenpath">
-          <GridTitle><Leaf size={20} /> Why GreenPath?</GridTitle>
-          <GridDesc>
-            Products with the GreenPath label have lower carbon emissions. Make eco-friendly choices and help reduce your carbon footprint.
-          </GridDesc>
-          <GridIcon><Info size={38} /></GridIcon>
-        </GridCard>
-        <GridCard to="/greenpath">
-          <GridTitle><Gift size={20} /> Discounts for Green Choices</GridTitle>
-          <GridDesc>
-            Enjoy exclusive discounts and rewards when you choose GreenPath products. Save money and the planet!
-          </GridDesc>
-          <GridIcon><Gift size={38} /></GridIcon>
-        </GridCard>
-        <GridCard to="/greenpath">
-          <GridTitle><Leaf size={20} /> Learn About Carbon Emissions</GridTitle>
-          <GridDesc>
-            Discover how your shopping choices impact the environment and how GreenPath helps you make better decisions.
-          </GridDesc>
-          <GridIcon><Info size={38} /></GridIcon>
-        </GridCard>
-      </GridsSection>
-
-      {/* Product Grid Section */}
-      <ProductSection>
-        <h2 style={{fontWeight: 700, fontSize: '1.4rem', marginBottom: 16}}>Featured GreenPath Products</h2>
-        <ProductGrid>
-          {products.slice(0, 4).map(product => (
-            <ProductCard to="/greenpath/products" key={product.id} title={product.name}>
-              <ProductImage src={product.image} alt={product.name} />
-              <ProductName>{product.name}</ProductName>
-              <ProductPrice>${product.price.toFixed(2)}</ProductPrice>
-              <div style={{color: '#43a047', fontSize: '0.95rem', marginTop: 4}}>
-                CO₂: {product.co2Emissions}kg
-              </div>
-            </ProductCard>
-          ))}
-        </ProductGrid>
-        <div style={{textAlign: 'center', marginTop: 24}}>
-          <HeroButton to="/greenpath/products">
-            <Leaf size={20} /> See All GreenPath Products <ArrowRight size={16} />
-          </HeroButton>
-        </div>
-      </ProductSection>
-    </div>
+      {/* Category sections */}
+      {CATEGORY_MAP.map(cat => {
+        const catProducts = (productData as Record<string, any[]>)[cat.key]?.slice(0, 5) || [];
+        return (
+          <CategorySection key={cat.key}>
+            <CategoryHeader>
+              <CategoryTitle>{cat.label}</CategoryTitle>
+              <ShopAllBtn onClick={() => navigate(`/category/${cat.key}`)}>Shop all</ShopAllBtn>
+            </CategoryHeader>
+            <CategoryRow>
+              {catProducts.map((prod: any, idx: number) => (
+                <CatCard key={prod.id || idx}>
+                  <CatImg src={prod.image || PLACEHOLDER_IMG} alt={prod.name} />
+                  <CatName>{prod.name}</CatName>
+                  <CatPrice>₹{prod.price?.toLocaleString?.() ?? prod.price}</CatPrice>
+                  <CatDesc>{prod.description}</CatDesc>
+                  <IconRow>
+                    <IconBtn title="CO₂ Emissions Split" onClick={() => setEmissionsModal({ open: true, product: prod })}>
+                      <Leaf size={20} color="#228b22" />
+                    </IconBtn>
+                    <IconBtn title="Alternative Suggestions" onClick={() => setAlternativesModal({ open: true, product: prod })}>
+                      <ListTree size={20} color="#0071dc" />
+                    </IconBtn>
+                  </IconRow>
+                </CatCard>
+              ))}
+            </CategoryRow>
+          </CategorySection>
+        );
+      })}
+      <EmissionsModal open={emissionsModal.open} product={emissionsModal.product} onClose={() => setEmissionsModal({ open: false, product: null })} />
+      <AlternativesModal open={alternativesModal.open} product={alternativesModal.product} onClose={() => setAlternativesModal({ open: false, product: null })} />
+    </>
   );
 };
 

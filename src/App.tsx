@@ -6,7 +6,9 @@ import ProductDetail from './components/ProductDetail';
 import './App.css';
 import SecondaryNavbar from './components/SecondaryNavbar';
 import HomePage from './components/HomePage';
+import styled from 'styled-components';
 import { supabase } from './supabaseClient';
+import CategoryPage from './components/CategoryPage';
 
 import GreenPathLanding from './components/GreenPathLanding'; 
 
@@ -263,6 +265,272 @@ function AuthSignup() {
   );
 }
 
+const greenPathProducts = [
+  {
+    name: "Cloth Diaper Rental – ReDiaper",
+    emissions: 0.05,
+    emissionsSplit: {
+      laundry: 0.03,
+      logistics: 0.015,
+      packaging: 0.005
+    },
+    price: 1500,
+    description: "Stylish bamboo-cotton reusable set; weekly eco-washing pickup, compostable shipping",
+    image: 'https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    name: "EcoCompute ARM Laptop",
+    emissions: 80,
+    emissionsSplit: {
+      manufacture: 60,
+      transport: 12,
+      packaging: 8
+    },
+    price: 35999,
+    description: "Lightweight ARM design, efficient battery, aluminum chassis",
+    image: 'https://images.unsplash.com/photo-1517336714731-489689fd1ca8?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    name: "Wooden Pacifier – WoodPads",
+    emissions: 0.18,
+    emissionsSplit: {
+      woodMilling: 0.1,
+      assembly: 0.05,
+      packaging: 0.03
+    },
+    price: 600,
+    description: "Sustainably-harvested beechwood, hand-finished, reusable cotton pouch",
+    image: 'https://images.unsplash.com/photo-1464983953574-0892a716854b?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    name: "CorkStyle Hybrid Belt",
+    emissions: 3.5,
+    emissionsSplit: {
+      cork: 2,
+      leather: 0.8,
+      logistics: 0.7
+    },
+    price: 1399,
+    description: "Cork + leather exterior, veg-tanned",
+    image: 'https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    name: "Bamboo Towels – LeafTissue",
+    emissions: 0.7,
+    emissionsSplit: {
+      farming: 0.25,
+      transport: 0.3,
+      packaging: 0.15
+    },
+    price: 280,
+    description: "Certified organic bamboo, softer with extra layers",
+    image: 'https://images.unsplash.com/photo-1503602642458-232111445657?auto=format&fit=crop&w=600&q=80',
+  },
+  {
+    name: "Apple – Kashmir Valley (ZeroCarbon Fruits)",
+    emissions: 0.9,
+    emissionsSplit: {
+      farming: 0.4,
+      transport: 0.3,
+      packaging: 0.2
+    },
+    price: 275,
+    description: "Shipped by eco-rail, reusable crates, shorter cold-chain",
+    image: 'https://images.unsplash.com/photo-1502741338009-cac2772e18bc?auto=format&fit=crop&w=600&q=80',
+  }
+];
+
+const HeroSection = styled.section`
+  background: linear-gradient(90deg, #43a047 60%, #b2dfdb 100%);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2.5rem 3rem 2.5rem 2rem;
+  border-radius: 16px;
+  margin: 2rem auto 2.5rem auto;
+  max-width: 1200px;
+  min-height: 220px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.08);
+  @media (max-width: 900px) {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem 1rem;
+  }
+`;
+const HeroText = styled.div`
+  flex: 1;
+`;
+const HeroTitle = styled.h1`
+  font-size: 2.2rem;
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+`;
+const HeroSubtitle = styled.p`
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+`;
+const HeroButton = styled.button`
+  background: #ffc220;
+  color: #222;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  transition: background 0.2s;
+  margin-top: 1rem;
+  &:hover {
+    background: #ffd966;
+  }
+`;
+const HeroImage = styled.img`
+  width: 180px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 12px;
+  margin-left: 2rem;
+  background: #fff;
+  @media (max-width: 900px) {
+    margin: 2rem 0 0 0;
+  }
+`;
+const ScanSection = styled.section`
+  background: linear-gradient(90deg, #fffde7 60%, #ffe082 100%);
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(67,160,71,0.08);
+  margin: 2.5rem auto;
+  max-width: 700px;
+  padding: 2rem 2rem 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+`;
+const ScanTitle = styled.h2`
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #43a047;
+  margin-bottom: 0.5rem;
+`;
+const ScanDesc = styled.p`
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+`;
+const ScanButton = styled.button`
+  background: #43a047;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.75rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(67,160,71,0.08);
+  margin-bottom: 1.5rem;
+  transition: background 0.2s;
+  &:hover {
+    background: #388e3c;
+  }
+`;
+const Grid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 0 1rem;
+`;
+const Card = styled.div`
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+  padding: 1.1rem 1.1rem 1.1rem 1.1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-height: 0;
+  position: relative;
+  overflow: hidden;
+`;
+const Img = styled.img`
+  width: 100%;
+  height: 110px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 0.7rem;
+`;
+const Name = styled.h2`
+  font-size: 1.1rem;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+`;
+const Price = styled.div`
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0071dc;
+  margin-bottom: 0.3rem;
+`;
+const Desc = styled.p`
+  font-size: 0.98rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+`;
+const GreenBadge = styled.span`
+  background: #e6f7e6;
+  color: #228b22;
+  font-size: 0.93rem;
+  font-weight: 600;
+  border-radius: 8px;
+  padding: 0.15rem 0.6rem;
+  margin-bottom: 0.4rem;
+  margin-right: 0.5rem;
+`;
+const Emissions = styled.div`
+  font-size: 0.95rem;
+  color: #228b22;
+  margin-bottom: 0.1rem;
+`;
+
+function GreenPathPage() {
+  return (
+    <div>
+      <HeroSection>
+        <HeroText>
+          <HeroTitle>Choose a Greener Path</HeroTitle>
+          <HeroSubtitle>
+            Shop products with lower carbon emissions and make a positive impact on the planet. Join the GreenPath movement today!
+          </HeroSubtitle>
+          <HeroButton>Shop GreenPath →</HeroButton>
+        </HeroText>
+        <HeroImage src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=400&q=80" alt="GreenPath Hero" />
+      </HeroSection>
+      <ScanSection>
+        <ScanTitle>In-Store Feature: Scan to Know CO₂ Emission</ScanTitle>
+        <ScanDesc>
+          Scan here to know the CO₂ emission of the product in front of you. Just tap the button below and point your camera at the QR code on the product!
+        </ScanDesc>
+        <ScanButton>Scan QR Code</ScanButton>
+      </ScanSection>
+      <Grid>
+        {greenPathProducts.map((p, i) => (
+          <Card key={i}>
+            <Img src={p.image} alt={p.name} />
+            <GreenBadge>GreenPath</GreenBadge>
+            <Name>{p.name}</Name>
+            <Price>₹{p.price.toLocaleString()}</Price>
+            <Desc>{p.description}</Desc>
+            <Emissions>CO₂: {p.emissions} kg</Emissions>
+          </Card>
+        ))}
+      </Grid>
+    </div>
+  );
+}
+
 function App() {
   return (
     <Router>
@@ -271,13 +539,16 @@ function App() {
         <SecondaryNavbar />
         <main className="pt-16">
           <Routes>
-            <Route path="/" element={<div style={{padding:'4rem',textAlign:'center'}}><h1>Welcome to Walmart</h1><p>This is the main homepage. Click Greenpath in the navigation to explore eco-friendly products!</p></div>} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/greenpath" element={<GreenPathLanding />} />
             <Route path="/greenpath/products" element={<ProductListing />} />
+            <Route path="/category/:categoryName" element={<CategoryPage />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/auth" element={<AuthEntry />} />
             <Route path="/auth/login" element={<AuthLogin />} />
             <Route path="/auth/signup" element={<AuthSignup />} />
+            {/* Voice assistant/GreenPathPage route from pulled code, keep both */}
+            <Route path="/greenpath-voice" element={<GreenPathPage />} />
           </Routes>
         </main>
       </div>

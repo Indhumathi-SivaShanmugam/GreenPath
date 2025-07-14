@@ -24,7 +24,7 @@ const LogoContainer = styled.div`
   margin-left: 32px;
 `;
 
-const WalmartLogo = styled.div`
+const WalmartLogo = styled(Link)`
   width: 48px;
   height: 48px;
   display: flex;
@@ -285,7 +285,7 @@ const Navbar: React.FC<{ onSignInClick?: () => void }> = ({ onSignInClick }) => 
   return (
     <NavbarContainer>
       <LogoContainer>
-        <WalmartLogo>
+        <WalmartLogo to="/">
           {/* Walmart Spark Logo SVG */}
           <svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
             <circle cx="20" cy="20" r="20" fill="none" />
@@ -335,10 +335,27 @@ const Navbar: React.FC<{ onSignInClick?: () => void }> = ({ onSignInClick }) => 
         </RightItem>
         <DropdownContainer ref={dropdownRef}>
           {userFirstName ? (
-            <RightButton type="button" style={{ fontWeight: 700, fontSize: 18 }}>
-              <User size={24} />
-              {userFirstName}
-            </RightButton>
+            <>
+              <RightButton type="button" style={{ fontWeight: 700, fontSize: 18 }} onClick={() => setDropdownOpen((v) => !v)}>
+                <User size={24} />
+                {userFirstName}
+                <ChevronDown size={18} />
+              </RightButton>
+              {dropdownOpen && (
+                <DropdownMenu>
+                  <DropdownItem onClick={() => { setDropdownOpen(false); navigate('/dashboard'); }}>
+                    Dashboard
+                  </DropdownItem>
+                  <DropdownItem onClick={() => { setDropdownOpen(false); navigate('/account'); }}>
+                    My Account
+                  </DropdownItem>
+                  <DropdownDivider />
+                  <DropdownItem onClick={async () => { setDropdownOpen(false); await supabase.auth.signOut(); window.location.reload(); }}>
+                    Sign Out
+                  </DropdownItem>
+                </DropdownMenu>
+              )}
+            </>
           ) : (
             <RightButton type="button" onClick={() => setDropdownOpen((v) => !v)}>
               <User size={24} />

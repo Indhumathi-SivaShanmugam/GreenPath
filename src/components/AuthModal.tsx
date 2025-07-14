@@ -191,7 +191,8 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose }) => {
     else {
       setSuccess('Logged in!');
       setStep('success');
-      setTimeout(onClose, 1200);
+      // Force reload to update Navbar user state
+      setTimeout(() => { window.location.reload(); }, 1200);
     }
     setLoading(false);
   };
@@ -209,6 +210,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose }) => {
     else {
       setStep('verify');
       setVerifSent(true);
+      // Force reload after verification to update Navbar user state
     }
     setLoading(false);
   };
@@ -218,11 +220,10 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose }) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    // Supabase auto-verifies via magic link or SMS, so just simulate success
     setSuccess('Phone verified!');
     setTimeout(() => {
       setStep('success');
-      setTimeout(onClose, 1200);
+      setTimeout(() => { window.location.reload(); }, 1200);
     }, 1200);
     setLoading(false);
   };
@@ -281,13 +282,16 @@ const AuthModal: React.FC<AuthModalProps> = ({ open, onClose }) => {
               onChange={e => setLastName(e.target.value)}
               required
             />
-            <Input
-              type="text"
-              placeholder="Phone number"
-              value={phone}
-              onChange={e => setPhone(e.target.value)}
-              required={!identifier.includes('@')}
-            />
+            {/* Only show phone input if identifier is not an email */}
+            {!identifier.includes('@') && (
+              <Input
+                type="text"
+                placeholder="Phone number"
+                value={phone}
+                onChange={e => setPhone(e.target.value)}
+                required
+              />
+            )}
             <Input
               type="password"
               placeholder="Create a password"
