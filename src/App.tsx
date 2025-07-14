@@ -8,6 +8,8 @@ import SecondaryNavbar from './components/SecondaryNavbar';
 import HomePage from './components/HomePage';
 import { supabase } from './supabaseClient';
 
+import GreenPathLanding from './components/GreenPathLanding'; 
+
 // Entry page: email/phone input
 function AuthEntry() {
   const [identifier, setIdentifier] = useState('');
@@ -270,7 +272,7 @@ function App() {
         <main className="pt-16">
           <Routes>
             <Route path="/" element={<div style={{padding:'4rem',textAlign:'center'}}><h1>Welcome to Walmart</h1><p>This is the main homepage. Click Greenpath in the navigation to explore eco-friendly products!</p></div>} />
-            <Route path="/greenpath" element={<HomePage />} />
+            <Route path="/greenpath" element={<GreenPathLanding />} />
             <Route path="/greenpath/products" element={<ProductListing />} />
             <Route path="/product/:id" element={<ProductDetail />} />
             <Route path="/auth" element={<AuthEntry />} />

@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Leaf, ArrowRight, Info, Gift, Camera, QrCode, CheckCircle } from 'lucide-react';
 import { Html5Qrcode } from 'html5-qrcode';
+import VoiceAssistant from './VoiceAssistant';
 
 // Hero Section
 const HeroSection = styled.section`
@@ -620,6 +621,10 @@ const GreenPathLanding: React.FC = () => {
           </HeroButton>
         </div>
       </ProductSection>
+      {/* Voice Assistant in bottom right corner */}
+      <div style={{ position: 'fixed', bottom: 24, right: 24, zIndex: 1000 }}>
+        <VoiceAssistant />
+      </div>
     </div>
   );
 };
